@@ -571,3 +571,165 @@ input:focus {
     margin-left: 0;
   }
 }
+
+/* ==========================================================
+   8. RESUMEN (dashboard)
+   ========================================================== */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: 1rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--color-line);
+  border-radius: 0.75rem;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  text-align: left;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.stat-value {
+  font-size: 1.75rem;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-button {
+  cursor: pointer;
+}
+
+.stat-button:hover {
+  border-color: var(--color-accent);
+}
+
+.stat-button.is-alert {
+  border-color: #e0b56a;
+  background-color: var(--color-warning-soft);
+}
+
+.stat-button.is-alert .stat-value {
+  color: var(--color-warning);
+}
+
+.dashboard-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+@media (min-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 3fr 2fr;
+    align-items: start;
+  }
+}
+
+/* Gráfico de barras hecho solo con HTML y CSS */
+.bar-chart {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.bar-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  outline-offset: 4px;
+}
+
+/* El "carril" de cada barra: alto fijo con la línea base abajo */
+.bar-track {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  height: 12rem;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.bar {
+  width: min(70%, 2.5rem);
+  min-height: 3px;
+  border-radius: 4px 4px 0 0;
+  background-color: var(--color-accent);
+}
+
+.bar-column:hover .bar,
+.bar-column:focus-visible .bar {
+  background-color: var(--color-accent-dark);
+}
+
+.bar-label {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+/* Tooltip: oculto hasta pasar el mouse o enfocar con el teclado */
+.bar-tooltip {
+  position: absolute;
+  bottom: calc(100% + 0.25rem);
+  left: 50%;
+  z-index: 1;
+  display: none;
+  flex-direction: column;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius);
+  background-color: var(--color-text);
+  color: #ffffff;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.bar-column:hover .bar-tooltip,
+.bar-column:focus-visible .bar-tooltip {
+  display: flex;
+  bottom: auto;
+  top: 0;
+}
+
+/* Más vendidos: barras horizontales */
+.top-list {
+  display: grid;
+  gap: 0.9rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.top-text {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0 0.75rem;
+  margin-bottom: 0.3rem;
+}
+
+.top-track {
+  height: 0.5rem;
+  border-radius: 999px;
+  background-color: var(--color-bg);
+}
+
+.top-bar {
+  height: 100%;
+  border-radius: 999px;
+  background-color: var(--color-accent);
+}

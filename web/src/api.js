@@ -51,4 +51,6 @@ export const api = {
 
   getSales: () => request("/sales?limit=50"),
   createSale: (items) => request("/sales", { method: "POST", body: JSON.stringify({ items }) }),
+
+  getSummary: () => request("/reports/summary"),
 };

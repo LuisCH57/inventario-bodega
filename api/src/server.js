@@ -5,6 +5,7 @@ import express from "express";
 import { pool } from "./db.js";
 import productsRouter from "./routes/products.js";
 import salesRouter from "./routes/sales.js";
+import reportsRouter from "./routes/reports.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -28,6 +29,7 @@ app.get("/api/health", async (req, res) => {
 // Cada grupo de rutas tiene su propio archivo
 app.use("/api/products", productsRouter);
 app.use("/api/sales", salesRouter);
+app.use("/api/reports", reportsRouter);
 
 // Si ninguna ruta coincidió: 404
 app.use((req, res) => {

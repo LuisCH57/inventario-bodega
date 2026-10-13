@@ -128,3 +128,10 @@ GET {{api}}/products/1
 
 ### 19. Intentar eliminar un producto que ya se vendió (debe responder 409)
 DELETE {{api}}/products/1
+
+# ==========================================================
+# REPORTES (Etapa 5)
+# ==========================================================
+
+### 20. Resumen para el dashboard
+GET {{api}}/reports/summary

@@ -3,18 +3,20 @@ import { api } from "./api.js";
 import SalesRegister from "./components/SalesRegister.jsx";
 import ProductsView from "./components/ProductsView.jsx";
 import SalesHistory from "./components/SalesHistory.jsx";
+import Dashboard from "./components/Dashboard.jsx";
 import ErrorMessage from "./components/ErrorMessage.jsx";
 import "./App.css";
 
 // Pestañas de la aplicación
 const VIEWS = [
+  { id: "dashboard", label: "Resumen" },
   { id: "register", label: "Caja" },
   { id: "products", label: "Productos" },
   { id: "sales", label: "Ventas" },
 ];
 
 export default function App() {
-  const [view, setView] = useState("register");
+  const [view, setView] = useState("dashboard");
 
   // Los productos se comparten entre "Caja" y "Productos", por eso viven aquí
   const [products, setProducts] = useState([]);
@@ -107,6 +109,7 @@ export default function App() {
 
         {status === "ready" && (
           <>
+            {view === "dashboard" && <Dashboard onGoToProducts={() => setView("products")} />}
             {view === "register" && <SalesRegister products={products} onSaleCompleted={loadProducts} />}
             {view === "products" && <ProductsView products={products} onChanged={loadProducts} />}
             {view === "sales" && <SalesHistory />}
