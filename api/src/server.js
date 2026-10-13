@@ -14,6 +14,30 @@ const PORT = process.env.PORT || 3000;
 // express.json() lee el cuerpo de la petición y convierte el JSON en un objeto (req.body).
 app.use(express.json());
 
+// CORS: el navegador bloquea las peticiones entre sitios distintos
+// (luisch57.github.io -> la API en Render) salvo que la API lo autorice.
+// CORS_ORIGIN lista los sitios permitidos, separados por comas.
+const allowedOrigins = (process.env.CORS_ORIGIN ?? "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (origin && allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Vary", "Origin");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  }
+  // Antes de un POST, PUT o DELETE, el navegador envía una "consulta previa"
+  // (método OPTIONS) para preguntar si tiene permiso. Respondemos sin contenido.
+  if (req.method === "OPTIONS") {
+    return res.status(204).end();
+  }
+  next();
+});
+
 // Registro simple: muestra en la terminal cada petición que llega
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`);

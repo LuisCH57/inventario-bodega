@@ -22,6 +22,8 @@ export default function App() {
   const [products, setProducts] = useState([]);
   const [status, setStatus] = useState("loading"); // "loading" | "ready" | "error"
   const [error, setError] = useState(null);
+  // true si la primera carga tarda: el servidor gratuito puede estar "dormido"
+  const [isSlow, setIsSlow] = useState(false);
 
   // Cargar los productos una vez, al abrir la aplicación.
   // setState solo se llama cuando llega la respuesta (dentro de .then).
@@ -46,6 +48,12 @@ export default function App() {
     return () => {
       ignore = true;
     };
+  }, []);
+
+  // Si a los 4 segundos todavía no hay respuesta, avisar al usuario
+  useEffect(() => {
+    const timer = setTimeout(() => setIsSlow(true), 4000);
+    return () => clearTimeout(timer); // cancelar el temporizador si el componente desaparece
   }, []);
 
   // Recargar los productos después de una venta o un cambio en el catálogo
@@ -96,7 +104,17 @@ export default function App() {
       </header>
 
       <main className="container main">
-        {status === "loading" && <p className="empty">Cargando productos...</p>}
+        {status === "loading" && (
+          <div className="stack">
+            <p className="empty">Cargando productos...</p>
+            {isSlow && (
+              <div className="alert alert-warning" role="status">
+                El servidor de esta demo usa un plan gratuito y se apaga cuando nadie lo usa. Está encendiéndose:
+                puede tardar hasta un minuto.
+              </div>
+            )}
+          </div>
+        )}
 
         {status === "error" && (
           <div className="stack">
