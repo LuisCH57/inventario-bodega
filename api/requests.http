@@ -1,0 +1,76 @@
+# ==========================================================
+# Pruebas de la API con la extensión REST Client de VS Code.
+# Encima de cada petición aparece "Send Request": haz clic ahí.
+# Cada petición se separa con ###
+# ==========================================================
+
+@api = http://localhost:3000/api
+
+### 1. ¿La API está viva y conectada a la base de datos?
+GET {{api}}/health
+
+### 2. Listar todos los productos
+GET {{api}}/products
+
+### 3. Buscar productos por nombre
+GET {{api}}/products?search=leche
+
+### 4. Productos con stock bajo
+GET {{api}}/products?lowStock=true
+
+### 5. Ver un producto por su id
+GET {{api}}/products/1
+
+### 6. Crear un producto
+POST {{api}}/products
+Content-Type: application/json
+
+{
+  "name": "Chocolate Sublime",
+  "category": "Snacks",
+  "priceCents": 200,
+  "stock": 30,
+  "minStock": 10
+}
+
+### 7. Crear con datos inválidos (debe responder 400)
+POST {{api}}/products
+Content-Type: application/json
+
+{
+  "name": "",
+  "category": "Snacks",
+  "priceCents": -5,
+  "stock": 10,
+  "minStock": 2
+}
+
+### 8. Crear un producto repetido (debe responder 409)
+POST {{api}}/products
+Content-Type: application/json
+
+{
+  "name": "Inca Kola 500 ml",
+  "category": "Bebidas",
+  "priceCents": 250,
+  "stock": 10,
+  "minStock": 5
+}
+
+### 9. Actualizar un producto (reponer stock del detergente, id 12)
+PUT {{api}}/products/12
+Content-Type: application/json
+
+{
+  "name": "Detergente 500 g",
+  "category": "Limpieza",
+  "priceCents": 590,
+  "stock": 15,
+  "minStock": 3
+}
+
+### 10. Producto que no existe (debe responder 404)
+GET {{api}}/products/9999
+
+### 11. Eliminar un producto (cambia el número por el id del Chocolate Sublime)
+DELETE {{api}}/products/13
