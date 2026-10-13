@@ -4,6 +4,7 @@
 import express from "express";
 import { pool } from "./db.js";
 import productsRouter from "./routes/products.js";
+import salesRouter from "./routes/sales.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,8 +25,9 @@ app.get("/api/health", async (req, res) => {
   res.json({ status: "ok" });
 });
 
-// Todas las rutas de productos empiezan con /api/products
+// Cada grupo de rutas tiene su propio archivo
 app.use("/api/products", productsRouter);
+app.use("/api/sales", salesRouter);
 
 // Si ninguna ruta coincidió: 404
 app.use((req, res) => {

@@ -74,3 +74,57 @@ GET {{api}}/products/9999
 
 ### 11. Eliminar un producto (cambia el número por el id del Chocolate Sublime)
 DELETE {{api}}/products/13
+
+# ==========================================================
+# VENTAS (Etapa 3)
+# ==========================================================
+
+### 12. Registrar una venta: 2 Inca Kola (id 1) y 1 arroz (id 5)
+POST {{api}}/sales
+Content-Type: application/json
+
+{
+  "items": [
+    { "productId": 1, "quantity": 2 },
+    { "productId": 5, "quantity": 1 }
+  ]
+}
+
+### 13. Venta con más stock del que hay (debe responder 409 y NO guardar nada)
+POST {{api}}/sales
+Content-Type: application/json
+
+{
+  "items": [
+    { "productId": 2, "quantity": 1 },
+    { "productId": 7, "quantity": 50 }
+  ]
+}
+
+### 14. Venta con un producto que no existe (debe responder 404)
+POST {{api}}/sales
+Content-Type: application/json
+
+{
+  "items": [{ "productId": 9999, "quantity": 1 }]
+}
+
+### 15. Venta vacía (debe responder 400)
+POST {{api}}/sales
+Content-Type: application/json
+
+{
+  "items": []
+}
+
+### 16. Últimas ventas
+GET {{api}}/sales
+
+### 17. Ver una venta por su id
+GET {{api}}/sales/1
+
+### 18. Comprobar que el stock bajó (Inca Kola)
+GET {{api}}/products/1
+
+### 19. Intentar eliminar un producto que ya se vendió (debe responder 409)
+DELETE {{api}}/products/1
